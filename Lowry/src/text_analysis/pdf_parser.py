@@ -3,8 +3,7 @@ Created on 24 Nov 2011
 
 Provide functions to parse pdfs to be used in search and analysis
 
-For brevity and following Python 2.7 conventions the initial functionality is _not_
- Object Oriented
+
 @author: Zak
 '''
 
