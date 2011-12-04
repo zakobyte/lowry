@@ -124,12 +124,13 @@ class PdfParser():
         for path, subdirs, files in os.walk(pdf_foldername):
             pattern = "*.pdf"
             files.sort()
+            page_num = 1
             for name in files:
                 if (fnmatch.fnmatch(name, pattern)):
-                    self.convert_pdfpage_to_json(os.path.join(path, name))
+                    self.convert_pdfpage_to_json(os.path.join(path, name), page_num)
+                    page_num += 1
         
-        
-    def convert_pdfpage_to_json(self, pdf_filename):
+    def convert_pdfpage_to_json(self, pdf_filename, page_num):
         '''
         Make json representations of each file
         They will be loaded into the databases and used for searching using RESTful queries
@@ -142,13 +143,23 @@ class PdfParser():
         
         text = self.convert_pdf_to_text(fr_pdf)
         
-        json_data = {'name':pdf_filename, 'page':text}
+        json_data = {'page_num': page_num, 'page':'page_' + str(page_num),'name':pdf_filename, 'content':text}
         
         json_file = open(json_filename, "wb")
         json.dump(json_data, json_file)
         json_file.close()
         
+    def get_json_pages(self, json_foldername):
+        for path, subdirs, files in os.walk(json_foldername):
+            pattern = "*.json"
+            #files.sort()
+            json_files = []
+            for name in files:
+                if (fnmatch.fnmatch(name, pattern)):
+                    json_files.append(name)
         
+        return json_files
+            
     def write_text(self, text_filename, text_content):
         '''
         If the file exists overwrite it
