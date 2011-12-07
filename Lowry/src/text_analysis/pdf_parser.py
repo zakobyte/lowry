@@ -142,7 +142,10 @@ class PdfParser():
         
         text = self.convert_pdf_to_text(fr_pdf)
         
-        pgnum = json_filename[json_filename.replace(".json", "").rindex("_"):]
+        pgstr = json_filename.replace(".json", "")
+        r_pos = pgstr.rindex("_") + 1
+        pgnum = pgstr[r_pos:] 
+        pgnum = int(pgnum)
         
         json_data = {'page_num': pgnum, 'page':'page_' + str(pgnum),'name':pdf_filename, 'content':text}
         
