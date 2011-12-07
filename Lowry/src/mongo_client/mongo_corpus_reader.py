@@ -38,6 +38,9 @@ class MongoDBCorpusReader(object):
 if __name__ == "__main__":
     reader = MongoDBCorpusReader()
     
+
     for sent in reader.sents():
         print sent
+        
+    
     
